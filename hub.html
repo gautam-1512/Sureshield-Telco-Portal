@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Risk Hub · SureShield × BORDERHAWK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── CONFIG ─────────────────────────────────────────────────────────── */
+:root{
+  --bg:#0f0f0f;--rail:#0c0c0c;
+  --surface:#1a1a1a;--surface2:#161616;--surface3:#262626;--track:#262626;
+  --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.15);
+  --text:#e8e2d4;--text2:#c0bbb0;--text3:#8a857d;--text4:#6a6560;
+  --accent:#dc2626;--accent-dark:#b91c1c;--navy:#1B2A4A;
+  --sans:"Public Sans",-apple-system,system-ui,sans-serif;
+  --head:"Instrument Serif","Times New Roman",serif;
+  --serif:"Instrument Serif","Times New Roman",serif;
+  --mono:"SF Mono",ui-monospace,monospace;
+  --shadow:0 1px 4px rgba(0,0,0,.4);--shadow-md:0 8px 26px rgba(0,0,0,.5);
+}
+body.light{
+  --bg:#f4efe6;--rail:#efe9dd;
+  --surface:#fff;--surface2:#f7f2ea;--surface3:#e8e1d1;--track:#e3dccb;
+  --border:rgba(0,0,0,.1);--border2:rgba(0,0,0,.18);
+  --text:#0a0a0a;--text2:#3a3326;--text3:#6b6150;--text4:#8a8070;
+  --shadow:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 8px 24px rgba(0,0,0,.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--bg);background-image:radial-gradient(circle,rgba(127,127,127,.06) 1px,transparent 1.4px);background-size:24px 24px;color:var(--text);-webkit-font-smoothing:antialiased;border-top:3px solid var(--accent);transition:background .25s,color .25s;}
+a{color:var(--accent);text-decoration:none;}a:hover{color:var(--accent-dark);}
+.app{display:flex;min-height:calc(100vh - 3px);position:relative;z-index:1;}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.fx-aurora{position:absolute;inset:0;overflow:hidden;}
+.fx-aurora::before,.fx-aurora::after{content:"";position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 34%,rgba(220,38,38,.42) 50%,transparent 66%);filter:blur(70px);animation:aur 16s linear infinite;}
+.fx-aurora::after{background:linear-gradient(115deg,transparent 38%,var(--aur2) 52%,transparent 70%);animation-duration:22s;animation-direction:reverse;}
+body{--aur2:rgba(0,0,0,.6);}body.light{--aur2:rgba(255,255,255,.75);}
+@keyframes aur{0%{transform:translateX(-25%) translateY(-8%) rotate(0)}100%{transform:translateX(25%) translateY(8%) rotate(6deg)}}
+
+/* ── RAIL ── */
+.rail{width:236px;flex-shrink:0;background:var(--rail);border-right:1px solid var(--border);position:sticky;top:3px;height:calc(100vh - 3px);display:flex;flex-direction:column;padding:22px 0;transition:background .25s;}
+.rail-brand{padding:0 22px 20px;border-bottom:1px solid var(--border);}
+.rail-brand .b1{font-family:var(--head);font-weight:400;font-size:19px;color:var(--text);letter-spacing:0;}
+.rail-brand .b2{font:500 10px var(--mono);color:var(--text4);letter-spacing:.1em;margin-top:3px;}
+.rail-nav{padding:16px 12px;display:flex;flex-direction:column;gap:3px;}
+.rail-nav a{font:500 12.5px var(--sans);color:var(--text3);padding:9px 12px;border-radius:0 6px 6px 0;border-left:2px solid transparent;transition:all .13s;cursor:pointer;}
+.rail-nav a:hover{color:var(--text);background:rgba(127,127,127,.08);}
+.rail-nav a.active{font-weight:700;color:var(--accent);background:rgba(220,38,38,.14);border-left-color:var(--accent);}
+.rail-sub a{font:600 11px var(--sans);color:var(--text4);padding:5px 12px 5px 22px;border-left:2px solid var(--border);cursor:pointer;display:block;}
+.rail-sub a:hover{color:var(--accent);border-left-color:var(--accent);}
+.rail-foot{margin-top:auto;padding:16px 16px 0;}
+.rail-cta{display:flex;align-items:center;gap:9px;width:100%;text-align:left;font:700 11px var(--sans);color:var(--text2);background:var(--surface);border:1px solid var(--border2);border-radius:9px;padding:11px 13px;margin-bottom:8px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow);}
+.rail-cta::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;box-shadow:0 0 0 3px rgba(220,38,38,.16);}
+.rail-cta .arw{margin-left:auto;color:var(--text4);transition:transform .15s;}
+.rail-cta:hover{border-color:var(--accent);color:var(--accent);}
+.rail-cta:hover .arw{color:var(--accent);transform:translateX(3px);}
+.rail-lockup{font:500 9px var(--mono);color:var(--text4);text-align:center;margin-top:15px;letter-spacing:.08em;}
+.rail-score{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:15px;text-align:center;box-shadow:var(--shadow);}
+.rail-score .num{font:800 36px var(--mono);color:var(--accent);line-height:1;}
+.rail-score .band{font:800 9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-top:5px;}
+.rail-score hr{border:none;height:1px;background:var(--border);margin:13px 0;}
+.rail-score .kv{display:flex;justify-content:space-between;font:600 10px var(--mono);color:var(--text4);margin-bottom:6px;}
+.rail-score .kv b{color:var(--text2);font-weight:700;}
+/* ── MAIN ── */
+.main{flex:1;min-width:0;padding:24px 30px 40px;max-width:1280px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;gap:16px;flex-wrap:wrap;}
+.demo-tag{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.brand-lockup{display:flex;align-items:center;gap:10px;font:700 13px var(--mono);color:var(--text3);letter-spacing:.08em;text-transform:uppercase;}
+.brand-meta{font:600 9.5px var(--mono);color:var(--text4);letter-spacing:.08em;text-transform:uppercase;}
+.brand-meta .conf{color:var(--accent);font-weight:800;}
+.topbar-access{display:flex;align-items:center;gap:11px;}
+.topbar-access .av{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font:700 10px var(--mono);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ta-meta .n{font:700 11px var(--sans);color:var(--text);}
+.ta-meta .r{font:600 9px var(--mono);color:var(--text4);letter-spacing:.05em;text-transform:uppercase;margin-top:1px;}
+.ta-vline{width:1px;height:26px;background:var(--border2);}
+.ta-more{font:700 9px var(--mono);color:var(--accent);background:none;border:none;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;padding:4px 2px;}
+.topbar-actions{display:flex;gap:6px;}
+.tb-btn{font:700 10px var(--mono);color:var(--text3);border:1px solid var(--border2);background:none;padding:6px 11px;border-radius:6px;cursor:pointer;letter-spacing:.05em;text-transform:uppercase;transition:all .13s;}
+.tb-btn:hover{border-color:var(--accent);color:var(--accent);}
+.tb-icon{font-size:14px;line-height:1;color:var(--text3);border:1px solid var(--border2);background:none;padding:5px 9px;border-radius:6px;cursor:pointer;transition:all .13s;}
+.tb-icon:hover{border-color:var(--accent);color:var(--accent);}
+/* ── HERO ── */
+.hero{display:flex;align-items:flex-start;justify-content:space-between;gap:22px;margin-bottom:22px;flex-wrap:wrap;background:radial-gradient(130% 150% at 0% -10%,rgba(220,38,38,.12),transparent 52%),var(--surface2);border:1px solid var(--border2);border-top:3px solid var(--accent);border-radius:16px;padding:26px;box-shadow:var(--shadow-md);}
+.hero-lead{flex:1;min-width:280px;}
+.hero h1{font-family:var(--head);font-size:46px;line-height:1.1;color:var(--text);font-weight:400;margin-bottom:11px;}
+.hero-bubbles{display:flex;flex-wrap:wrap;gap:7px;margin-top:3px;}
+.bubble{font:600 11px var(--sans);color:var(--text2);background:var(--surface2);border:1px solid var(--border);padding:5px 11px;border-radius:20px;}
+.bubble.accent{color:var(--accent);background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.32);font-weight:700;}
+.hero-side{display:flex;flex-direction:row;flex-wrap:wrap;gap:11px;flex-shrink:0;align-items:stretch;}
+.hero-score{display:flex;flex-direction:column;gap:9px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 16px;box-shadow:var(--shadow);}
+.hs-top{font:800 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--text4);}
+.hs-row{display:flex;align-items:stretch;gap:14px;}
+.hs-main{text-align:center;padding-right:14px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;}
+.hs-main .num{font:800 38px var(--mono);color:var(--accent);line-height:1;}
+.hs-main .band{font:800 9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-top:5px;}
+.hs-main .hs-sub{font:700 7.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--text4);margin-top:4px;max-width:70px;line-height:1.3;}
+.hs-kvs{flex:1;display:flex;flex-direction:column;justify-content:center;gap:7px;}
+.hs-kvs .kv{display:flex;justify-content:space-between;font:600 10px var(--mono);color:var(--text4);}
+.hs-kvs .kv b{color:var(--text2);font-weight:700;}
+.kev-alert{display:flex;flex-direction:row;align-items:center;gap:13px;background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.32);border-radius:10px;padding:14px 16px;max-width:230px;}
+.kev-alert .ico{font-size:34px;line-height:1;color:var(--accent);flex-shrink:0;}
+.kev-alert .t1{font:800 12.5px var(--sans);color:var(--accent);}
+.kev-alert .t2{font:500 10px var(--mono);color:var(--text3);margin-top:1px;}
+/* ── PILLARS ── */
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:26px;}
+@media(max-width:900px){.metrics{grid-template-columns:repeat(2,1fr);}}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 15px;box-shadow:var(--shadow);}
+.metric .lbl{font:700 11px var(--sans);color:var(--text2);text-transform:uppercase;letter-spacing:.03em;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:5px;}
+.maxtag{font:700 6.5px var(--mono);color:var(--accent);border:1px solid rgba(220,38,38,.4);padding:1px 4px;border-radius:3px;letter-spacing:.06em;flex-shrink:0;}
+.metric .val{font:800 23px var(--mono);line-height:1;}
+.metric .mtag{display:flex;align-items:center;gap:5px;font:600 8px var(--mono);color:var(--text3);text-transform:uppercase;letter-spacing:.03em;margin-top:6px;}
+.metric .bar{height:4px;background:var(--track);border-radius:2px;margin:10px 0 7px;overflow:hidden;}
+.metric .bar span{display:block;height:100%;border-radius:2px;}
+/* ── ACTION PANEL ── */
+.grid-2{display:grid;grid-template-columns:330px 1fr;gap:15px;margin-bottom:28px;}
+@media(max-width:1000px){.grid-2{grid-template-columns:1fr;}}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:11px;overflow:hidden;box-shadow:var(--shadow);}
+.panel-head{padding:11px 17px;border-bottom:1px solid var(--border);font:700 10px var(--mono);color:var(--text4);letter-spacing:.1em;text-transform:uppercase;}
+.action-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 17px;border-bottom:1px solid var(--border);}
+.action-row:last-child{border-bottom:none;}
+.action-row .txt{font:600 13px var(--sans);color:var(--text);}
+.action-row .cf{font:600 10px var(--mono);color:#16a34a;margin-top:3px;display:none;}
+.action-row.done .cf{display:block;}
+.chip{font:700 10px var(--mono);background:var(--accent);color:#fff;border:none;padding:7px 13px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;cursor:pointer;transition:background .13s;}
+.chip:hover{background:var(--accent-dark);}
+.chip.submitted{background:#16a34a;cursor:default;}
+.fixcard{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--navy);border-radius:11px;display:flex;flex-direction:column;box-shadow:var(--shadow);overflow:hidden;}
+.fixcard-head{background:var(--navy);color:rgba(255,255,255,.86);font:700 10px var(--mono);letter-spacing:.12em;padding:7px 16px;}
+.fixcard-body{padding:18px 17px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;flex:1;}
+.fixcard-count{font:800 27px var(--mono);color:var(--text);}
+.fixcard-count small{color:var(--text2);font-size:18px;}
+.fixcard-lbl{font:800 9px var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--accent);}
+.fixcard-prog{width:100%;height:5px;background:var(--track);border-radius:3px;overflow:hidden;}
+.fixcard-prog span{display:block;height:100%;background:var(--accent);border-radius:3px;}
+.btn-outline{border:1px solid var(--border2);padding:8px 14px;font:700 10px var(--mono);color:var(--text2);text-transform:uppercase;border-radius:7px;width:100%;background:none;cursor:pointer;transition:all .13s;letter-spacing:.04em;}
+.btn-outline:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn-red{background:var(--accent);color:#fff;padding:9px;font:700 10px var(--mono);text-transform:uppercase;border-radius:7px;width:100%;border:none;cursor:pointer;transition:background .13s;letter-spacing:.04em;}
+.btn-red:hover{background:var(--accent-dark);}
+.req-confirm{display:none;font:600 10.5px var(--mono);color:#16a34a;margin-top:6px;}
+.req-confirm.show{display:block;}
+/* ── BLOCK / SECTION ── */
+.block{background:var(--surface2);border:1px solid var(--border2);border-radius:16px;padding:24px;margin-bottom:22px;box-shadow:var(--shadow-md);}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.sec-num{font:800 11px var(--mono);color:#fff;background:var(--accent);padding:3px 8px;border-radius:6px;letter-spacing:.06em;flex-shrink:0;}
+.sec-head .st{font-family:var(--head);font-weight:400;font-size:25px;line-height:1.2;color:var(--text);}
+.sec-head .sd{flex:1;}
+.sec-head .sr{font:600 10px var(--mono);color:var(--text4);}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
+@media(max-width:760px){.tiles{grid-template-columns:1fr;}}
+.tile{background:var(--surface);border:1px solid var(--border);border-top:2px solid var(--accent);border-radius:10px;overflow:hidden;cursor:pointer;box-shadow:var(--shadow);transition:transform .13s,box-shadow .13s;}
+.tile:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.tile.agg{border-top-color:var(--text4);}
+.tile-cap{padding:16px 16px 14px;}
+.tile .th{font:700 13px var(--sans);color:var(--text);margin-bottom:4px;}
+.tile .td{font:400 11px/1.5 var(--sans);color:var(--text3);}
+.reqlist{display:flex;flex-direction:column;gap:9px;}
+.reqrow{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:9px;padding:12px 15px;}
+.reqrow .rq-t{flex:1;font:600 13px var(--sans);color:var(--text);}
+.reqrow .rq-when{font:500 10px var(--mono);color:var(--text4);white-space:nowrap;}
+.reqrow .rq-status{font:700 9px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#f59e0b;background:rgba(245,158,11,.14);padding:4px 9px;border-radius:5px;white-space:nowrap;}
+.fixes-section-label{font:700 9.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--text4);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+.fixes-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;}
+@media(max-width:820px){.fixes-grid{grid-template-columns:1fr;}}
+.fix-item{display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid var(--border);}
+.fix-item:last-child{border-bottom:none;}
+.fix-item-num{font:800 12px var(--mono);color:var(--accent);padding-top:1px;}
+.fix-item-cat{font:700 9px var(--mono);letter-spacing:.09em;text-transform:uppercase;margin-bottom:3px;}
+.cat-kev{color:#f87171;}.cat-p3{color:#60a5fa;}.cat-p4{color:#c084fc;}.cat-p5{color:#34d399;}.cat-p1{color:#f87171;}.cat-p2{color:#fb923c;}
+body.light .cat-kev,body.light .cat-p1{color:#dc2626;}body.light .cat-p3{color:#2563eb;}body.light .cat-p4{color:#9333ea;}body.light .cat-p5{color:#16a34a;}body.light .cat-p2{color:#ea580c;}
+.fix-item-title{font:700 13.5px var(--sans);color:var(--text);margin-bottom:3px;}
+.fix-item-detail{font:400 11.5px/1.5 var(--sans);color:var(--text3);}
+.fix-item-detail code{font-family:var(--mono);font-size:10.5px;background:var(--surface3);padding:1px 4px;border-radius:3px;color:var(--text2);}
+.fix-badges{display:flex;flex-direction:column;gap:4px;flex-shrink:0;}
+.fix-badge{font:700 9px var(--mono);padding:2px 6px;border-radius:3px;white-space:nowrap;}
+.fb-low{background:rgba(74,222,128,.15);color:#16a34a;}.fb-med{background:rgba(96,165,250,.15);color:#2563eb;}.fb-high{background:rgba(251,146,60,.15);color:#c2410c;}.fb-crit{background:rgba(248,113,113,.15);color:#dc2626;}
+.collapse-btn{background:none;border:1px solid var(--border2);color:var(--text3);font:700 10px var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:5px 11px;border-radius:6px;cursor:pointer;transition:all .13s;}
+.collapse-btn:hover{border-color:var(--accent);color:var(--accent);}
+.collapsible.collapsed .collapsible-body{display:none;}
+/* ── REPORT OVERLAY ── */
+.report-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.9);flex-direction:column;backdrop-filter:blur(4px);}
+.report-overlay.open{display:flex;}
+.overlay-bar{background:#111;color:#fff;height:48px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:2px solid var(--accent);}
+.overlay-title{font:600 12.5px var(--mono);color:rgba(255,255,255,.82);letter-spacing:.03em;}
+.overlay-close{background:none;border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;cursor:pointer;font:700 11px var(--mono);border-radius:5px;transition:all .13s;}
+.overlay-close:hover{background:var(--accent);border-color:var(--accent);}
+.overlay-frame{flex:1;border:none;width:100%;}
+#pdfLoader{display:none;position:fixed;inset:0;z-index:350;background:rgba(10,10,10,.95);flex-direction:column;align-items:center;justify-content:center;gap:14px;font:500 12px var(--mono);color:rgba(255,255,255,.45);letter-spacing:.1em;backdrop-filter:blur(4px);}
+@keyframes _sp{to{transform:rotate(360deg)}}
+.spinner{width:36px;height:36px;border:3px solid rgba(220,38,38,.25);border-top-color:#dc2626;border-radius:50%;animation:_sp 1s linear infinite;}
+/* ── LOG OVERLAY ── */
+.log-overlay{display:none;position:fixed;inset:0;z-index:520;background:rgba(0,0,0,.82);align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px);}
+.log-overlay.open{display:flex;}
+.log-modal{background:var(--surface);border:1px solid var(--border2);border-top:3px solid var(--accent);border-radius:14px;max-width:560px;width:100%;max-height:80vh;overflow:auto;padding:24px;box-shadow:0 24px 60px rgba(0,0,0,.6);}
+.log-modal h3{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--text);margin-bottom:4px;}
+.log-modal .lm-sub{font:500 11px var(--mono);color:var(--text4);margin-bottom:16px;letter-spacing:.04em;}
+.log-row{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--border);}
+.log-row:last-child{border-bottom:none;}
+.log-row .av{width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;font:700 11px var(--mono);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.log-row .lr-t{flex:1;}
+.log-row .lr-n{font:700 12px var(--sans);color:var(--text);}
+.log-row .lr-r{font:500 10px var(--mono);color:var(--text4);margin-top:1px;}
+.log-row .lr-when{font:600 10px var(--mono);color:var(--text3);white-space:nowrap;}
+/* ── SHARE OVERLAY ── */
+.share-overlay{display:none;position:fixed;inset:0;z-index:520;background:rgba(0,0,0,.82);align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px);}
+.share-overlay.open{display:flex;}
+.share-modal{background:var(--surface);border:1px solid var(--border2);border-top:3px solid var(--accent);border-radius:14px;max-width:560px;width:100%;padding:26px;box-shadow:0 24px 60px rgba(0,0,0,.6);}
+.share-modal h3{font-family:var(--serif);font-size:23px;font-weight:400;color:var(--text);margin-bottom:12px;}
+.share-modal p{font:400 12px/1.65 var(--sans);color:var(--text3);margin-bottom:12px;}
+.share-modal .disc{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:13px 15px;max-height:150px;overflow-y:auto;font:400 11px/1.6 var(--sans);color:var(--text3);margin-bottom:16px;}
+.share-agree{display:flex;align-items:flex-start;gap:9px;font:500 11.5px var(--sans);color:var(--text2);margin-bottom:16px;cursor:pointer;}
+.share-form-section{display:none;}
+.share-form-section.visible{display:block;}
+.share-form-section .sff{margin-bottom:10px;}
+.share-form-section label{display:block;font:700 9.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text4);margin-bottom:4px;}
+.share-form-section input{width:100%;padding:9px 11px;background:var(--surface2);border:1px solid var(--border2);border-radius:7px;font:500 13px var(--sans);color:var(--text);outline:none;}
+.share-form-section input:focus{border-color:var(--accent);}
+.share-actions{display:flex;gap:9px;justify-content:flex-end;margin-top:14px;}
+/* ── BOOK REVIEW OVERLAY ── */
+.review-overlay{display:none;position:fixed;inset:0;z-index:520;background:rgba(0,0,0,.82);align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px);}
+.review-overlay.open{display:flex;}
+.review-modal{background:var(--surface);border:1px solid var(--border2);border-top:3px solid var(--accent);border-radius:14px;max-width:480px;width:100%;padding:26px;box-shadow:0 24px 60px rgba(0,0,0,.6);}
+.review-modal h3{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--text);margin-bottom:6px;}
+.review-modal .rm-sub{font:400 12px/1.6 var(--sans);color:var(--text3);margin-bottom:18px;}
+.review-field{margin-bottom:12px;}
+.review-field label{display:block;font:700 9.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text4);margin-bottom:4px;}
+.review-field input,.review-field select,.review-field textarea{width:100%;padding:9px 11px;background:var(--surface2);border:1px solid var(--border2);border-radius:7px;font:500 13px var(--sans);color:var(--text);outline:none;font-family:var(--sans);}
+.review-field input:focus,.review-field select:focus,.review-field textarea:focus{border-color:var(--accent);}
+.review-field textarea{resize:vertical;min-height:80px;}
+.review-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+.review-actions{display:flex;gap:9px;justify-content:flex-end;margin-top:16px;}
+/* ── LOADING SCREEN ── */
+.hub-loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:900;}
+.hub-loading .brand{font-family:var(--head);font-size:24px;color:var(--text3);}
+.hub-loading .status{font:500 11px var(--mono);color:var(--text4);letter-spacing:.1em;}
+.hub-loading .err-box{display:none;background:var(--surface);border:1px solid var(--border2);border-top:3px solid var(--accent);border-radius:12px;padding:22px 26px;max-width:420px;text-align:center;}
+.hub-loading .err-box h3{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--text);margin-bottom:8px;}
+.hub-loading .err-box p{font:400 12px/1.6 var(--sans);color:var(--text3);}
+.hub-loading .err-box a{color:var(--accent);}
+.hub-loading.error .spinner{display:none;}
+.hub-loading.error .status{display:none;}
+.hub-loading.error .brand{display:none;}
+.hub-loading.error .err-box{display:block;}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(2rem);background:#111;color:rgba(255,255,255,.9);padding:9px 18px;font:500 12px var(--mono);opacity:0;transition:all .3s;pointer-events:none;z-index:600;border-left:3px solid var(--accent);border-radius:5px;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- Loading screen (shown until token verified) -->
+<div class="hub-loading" id="hubLoading">
+  <div class="spinner"></div>
+  <div class="brand">SureShield × BORDERHAWK</div>
+  <div class="status" id="loadStatus">Verifying access…</div>
+  <div class="err-box">
+    <h3>Hub access required</h3>
+    <p id="errMsg">This page must be opened via a secure hub link sent to your email, or by logging in through the <a href="index.html">SureShield website</a>.</p>
+  </div>
+</div>
+
+<!-- ── MAIN APP (hidden until verified) ── -->
+<div class="bg-fx" id="appRoot" style="display:none">
+  <div class="fx-aurora"></div>
+</div>
+<div class="app" id="appRoot2" style="display:none">
+
+  <!-- ══ RAIL ══ -->
+  <aside class="rail">
+    <div class="rail-brand">
+      <div class="b1" id="railCompany">—</div>
+      <div class="b2" id="railDomain">—</div>
+    </div>
+    <nav class="rail-nav">
+      <a class="active" onclick="navTo(this,null)">Overview</a>
+      <a onclick="navTo(this,'secReports')">My Reports</a>
+      <div class="rail-sub"><a onclick="scrollToSec('secReports')">Q1 2026 Baseline</a></div>
+      <a onclick="navTo(this,'secAgg')">Aggregate Reports</a>
+      <div class="rail-sub"><a onclick="scrollToSec('secAgg')">Q1 2026 Baseline</a></div>
+      <a onclick="navTo(this,'secRequested')">Requested Reports</a>
+      <a onclick="navTo(this,'secFixes')">Remediation Fixes</a>
+      <a onclick="navTo(this,'secServices')">Suggested Services</a>
+    </nav>
+    <div class="rail-foot">
+      <div class="rail-score">
+        <div class="num" id="railScore">—</div>
+        <div class="band" id="railBand">—</div>
+        <hr>
+        <div class="kv"><span>Nat. Rank</span><b id="railNatRank">—</b></div>
+        <div class="kv"><span>State Rank</span><b id="railStateRank">—</b></div>
+        <div class="kv"><span>Quarter</span><b>Q1 2026</b></div>
+      </div>
+      <button class="rail-cta" onclick="openLog()" style="margin-top:12px">Viewing Log · 30 days<span class="arw">→</span></button>
+      <button class="rail-cta" onclick="openShare()">Share Access<span class="arw">→</span></button>
+      <div class="rail-lockup">SURESHIELD × BORDERHAWK</div>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="demo-tag">
+        <div class="brand-lockup">SURESHIELD <span style="color:var(--text4)">×</span> BORDERHAWK</div>
+        <span class="brand-meta"><span class="conf">Confidential</span> · Cyber Risk Hub</span>
+      </div>
+      <div class="topbar-access">
+        <span class="av" id="userAvatar">?</span>
+        <div class="ta-meta">
+          <div class="n" id="userNameEl">—</div>
+          <div class="r" id="userRoleEl">Hub Member</div>
+        </div>
+        <span class="ta-vline"></span>
+        <button class="ta-more" onclick="openLog()">Activity →</button>
+      </div>
+      <div class="topbar-actions">
+        <button class="tb-icon" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">☀</button>
+        <button class="tb-btn" onclick="openShare()">Share</button>
+        <button class="tb-btn" onclick="if(confirm('Log out of the report hub?'))window.location.href='index.html'">Logout</button>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-lead">
+        <h1 id="heroCompany">Loading…</h1>
+        <div class="hero-bubbles" id="heroBubbles"></div>
+      </div>
+      <div class="hero-side">
+        <div class="hero-score">
+          <div class="hs-top">Q1 2026 Baseline</div>
+          <div class="hs-row">
+            <div class="hs-main">
+              <div class="num" id="heroScore">—</div>
+              <div class="band" id="heroBand">—</div>
+              <div class="hs-sub">Max Subdomain Score</div>
+            </div>
+            <div class="hs-kvs">
+              <div class="kv"><span>Nat. Rank</span><b id="heroNatRank">—</b></div>
+              <div class="kv"><span>State Rank</span><b id="heroStateRank">—</b></div>
+              <div class="kv"><span>Peer Rank</span><b id="heroPeerRank">—</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="kev-alert" id="kevAlert" style="display:none">
+          <span class="ico">⚠︎</span>
+          <div>
+            <div class="t1" id="kevT1">CISA KEVs Present</div>
+            <div class="t2">Immediate patching required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR SCORES -->
+    <div class="block" style="margin-bottom:22px">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <span class="st">Cyber Risk Security Pillar Scores</span>
+        <span class="sd"></span>
+        <span class="sr">Q1 2026 Baseline · Max pillar score shown</span>
+      </div>
+      <div class="metrics" id="pillarsGrid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- ACTION ITEMS -->
+    <div class="block" style="margin-bottom:22px">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <span class="st">Action Items To Mitigate Cyber Risk</span>
+        <span class="sd"></span>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-head">Requested Services</div>
+          <div class="action-row" id="ac1">
+            <div><div class="txt">Request a comprehensive external attack surface scan</div><div class="cf">✓ Request sent — our team will be in touch.</div></div>
+            <button class="chip" onclick="submitServiceRequest(this,'Attack Surface Scan','ac1')">Request →</button>
+          </div>
+          <div class="action-row" id="ac2">
+            <div><div class="txt">Request a baseline network threats and vulnerability scan</div><div class="cf">✓ Request sent — our team will be in touch.</div></div>
+            <button class="chip" onclick="submitServiceRequest(this,'Comprehensive Scan','ac2')">Request →</button>
+          </div>
+          <div class="action-row" id="ac3">
+            <div><div class="txt">Request demo of SureShield Continuous TVM solution</div><div class="cf">✓ Request sent — our team will be in touch.</div></div>
+            <button class="chip" onclick="submitServiceRequest(this,'CVM Demo','ac3')">Request →</button>
+          </div>
+          <div class="action-row" id="ac4">
+            <div><div class="txt">Request meeting with BORDERHAWK for Cyber Risk Assessment</div><div class="cf">✓ Request sent — our team will be in touch.</div></div>
+            <button class="chip" onclick="submitServiceRequest(this,'BORDERHAWK Meeting','ac4')">Request →</button>
+          </div>
+        </div>
+        <div class="fixcard">
+          <div class="fixcard-head">⚠ ACTION REQUIRED</div>
+          <div class="fixcard-body">
+            <div class="fixcard-count"><span id="fixQuickCount" style="color:var(--accent)">5</span> <small>/ 12</small></div>
+            <div class="fixcard-lbl">Immediate Fixes Needed</div>
+            <div class="fixcard-prog"><span style="width:42%"></span></div>
+            <div style="font:400 11.5px/1.5 var(--sans);color:var(--text3);text-align:center">Your report includes prioritised remediation steps.</div>
+            <button class="btn-outline" onclick="scrollToSec('secFixes')">View All Fixes →</button>
+            <button class="btn-red" id="reqUpdateBtn" onclick="requestVerifyFixes()">Request Updated Report to Verify Fixes</button>
+            <div class="req-confirm" id="reqConfirm">✓ Verification request logged — we will re-assess and notify you.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MY REPORTS -->
+    <div class="block collapsible" id="secReports" style="scroll-margin-top:16px;margin-bottom:20px">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <span class="st">My Telco's Reports</span>
+        <span class="sd"></span>
+        <span class="sr">Q1 2026 Baseline · 2 formats available</span>
+      </div>
+      <div class="tiles" id="reportTiles">
+        <!-- Populated by JS after data loads -->
+      </div>
+    </div>
+
+    <!-- AGGREGATE REPORTS -->
+    <div class="block" id="secAgg" style="scroll-margin-top:16px;margin-bottom:20px">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <span class="st">Telecommunications Sector Aggregate Reports</span>
+        <span class="sd"></span>
+        <span class="sr">Q1 2026 Baseline · 3,106 U.S. carriers</span>
+      </div>
+      <div class="tiles">
+        <div class="tile agg" onclick="openReport('index.html','US Telecom Cyber-Risk Report · SureShield')">
+          <div class="tile-cap">
+            <div class="th">🇺🇸 Full US Telecommunications Report</div>
+            <div class="td">All 3,106 U.S. carriers analyzed — composite risk scores, state breakdowns, pillar detail and peer benchmarking. Interactive report.</div>
+          </div>
+        </div>
+        <div class="tile agg">
+          <div class="tile-cap">
+            <div class="th">📄 Full Report PDF</div>
+            <div class="td">Complete US telecom cybersecurity findings in a portable PDF. Suitable for executive briefing, board review, and offline reading.</div>
+          </div>
+        </div>
+        <div class="tile agg">
+          <div class="tile-cap">
+            <div class="th">📊 Executive Summary Deck</div>
+            <div class="td">Key findings and risk highlights formatted for boardroom presentation — 12 slides, print-ready.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REQUESTED REPORTS -->
+    <div class="block" id="secRequested" style="scroll-margin-top:16px;margin-bottom:20px">
+      <div class="sec-head">
+        <span class="sec-num">05</span>
+        <span class="st">Requested Reports</span>
+        <span class="sd"></span>
+        <span class="sr" id="reqCount">No requests yet</span>
+      </div>
+      <div id="reqEmpty" style="font:400 12.5px/1.6 var(--sans);color:var(--text3);padding:6px 2px">
+        Reports and services you request from <b style="color:var(--text2)">Action Items To Mitigate Cyber Risk</b> will appear here with their status.
+      </div>
+      <div id="reqList" class="reqlist"></div>
+    </div>
+
+    <!-- REMEDIATION FIXES -->
+    <div class="block collapsible" id="secFixes" style="scroll-margin-top:16px;margin-bottom:20px">
+      <div class="sec-head">
+        <span class="sec-num">06</span>
+        <span class="st">Remediation Fixes</span>
+        <span class="sd"></span>
+        <span class="sr">5 quick wins · 12 total</span>
+        <button class="collapse-btn" onclick="toggleCollapse('secFixes')" id="fixesCollapseBtn">Collapse ▾</button>
+      </div>
+      <div class="collapsible-body" id="fixesBody">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- SUGGESTED SERVICES -->
+    <div class="block" id="secServices" style="scroll-margin-top:16px">
+      <div class="sec-head">
+        <span class="sec-num">07</span>
+        <span class="st">Suggested Services</span>
+        <span class="sd"></span>
+      </div>
+      <div class="tiles">
+        <div class="tile" onclick="window.open('https://www.sureshield.ai','_blank')">
+          <div class="tile-cap">
+            <div class="th">SureShield — Threat &amp; Vuln Mgmt</div>
+            <div class="td">Continuous threat and vulnerability management platform built for telecom operators.</div>
+          </div>
+        </div>
+        <div class="tile" onclick="window.open('https://www.sureshield.ai','_blank')">
+          <div class="tile-cap">
+            <div class="th">SureShield — Secure Trust</div>
+            <div class="td">Compliance, trust &amp; assurance program management for regulated carriers.</div>
+          </div>
+        </div>
+        <div class="tile" onclick="window.open('https://www.borderhawk.com','_blank')">
+          <div class="tile-cap">
+            <div class="th">BORDERHAWK — Risk Assessment</div>
+            <div class="td">Independent cyber risk assessment &amp; advisory for telecommunications infrastructure.</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:18px;background:var(--surface3);border:1px solid var(--border);border-radius:12px;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+        <div>
+          <div style="font:600 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px">Your SureShield Team</div>
+          <div style="font-family:var(--serif);font-size:22px;color:var(--text);margin-bottom:4px">Questions about this report?</div>
+          <div style="font:400 12.5px var(--sans);color:var(--text3)">Book a walkthrough with your dedicated analyst to prioritise remediations and plan your next scan.</div>
+        </div>
+        <button class="btn-red" style="width:auto;padding:11px 18px;flex-shrink:0" onclick="openBookReview()">Book a Review →</button>
+      </div>
+      <div style="margin-top:18px;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--border)">
+        <div style="font:700 10px var(--mono);color:var(--text4);letter-spacing:.1em">SURESHIELD × BORDERHAWK</div>
+        <div style="font:500 10px var(--mono);color:var(--text4);letter-spacing:.04em" id="footerMeta">Confidential · 2026 Q1</div>
+      </div>
+    </div>
+
+  </main>
+</div><!-- /app -->
+
+<!-- ══ PDF LOADER ══ -->
+<div id="pdfLoader"><div class="spinner"></div>GENERATING PDF REPORT…</div>
+
+<!-- ══ REPORT OVERLAY ══ -->
+<div class="report-overlay" id="reportOverlay">
+  <div class="overlay-bar">
+    <span class="overlay-title" id="overlayTitle"></span>
+    <button class="overlay-close" onclick="closeReport()">✕ CLOSE</button>
+  </div>
+  <iframe class="overlay-frame" id="reportFrame" src="" title="Report" allow="downloads"></iframe>
+</div>
+
+<!-- ══ LOG OVERLAY ══ -->
+<div class="log-overlay" id="logOverlay" onclick="if(event.target===this)closeLog()">
+  <div class="log-modal">
+    <h3>Report Hub Access &amp; Viewing Log</h3>
+    <div class="lm-sub" id="logSub">Access log for this hub</div>
+    <div id="logRows"></div>
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:flex-end">
+      <button class="tb-btn" onclick="closeLog()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SHARE OVERLAY ══ -->
+<div class="share-overlay" id="shareOverlay" onclick="if(event.target===this)closeShare()">
+  <div class="share-modal">
+    <h3>Share this report hub</h3>
+    <p>This hub contains confidential cyber-risk findings. Before sharing, review and accept the disclaimer.</p>
+    <div class="disc">This report and hub are provided by SureShield and BORDERHAWK for the sole use of the named carrier and its authorised representatives. The findings are based on external, non-intrusive assessment as of the scan date and are provided "as is" without warranty of completeness. Recipients agree to treat the contents as confidential, not to redistribute beyond authorised personnel, and to hold SureShield and BORDERHAWK harmless from any use, disclosure, or reliance on this material.</div>
+    <label class="share-agree"><input type="checkbox" id="shareAgree" onchange="document.getElementById('shareFormSection').classList.toggle('visible',this.checked)"><span>I have read and accept the disclaimer and indemnity terms above.</span></label>
+    <div class="share-form-section" id="shareFormSection">
+      <div class="sff"><label>Recipient Name</label><input id="shareRecipName" placeholder="Jane Doe"></div>
+      <div class="sff"><label>Recipient Email</label><input type="email" id="shareRecipEmail" placeholder="jane@company.com"></div>
+      <div class="sff"><label>Recipient Role</label><input id="shareRecipRole" placeholder="CISO, VP Engineering…"></div>
+    </div>
+    <div class="share-actions">
+      <button class="tb-btn" onclick="closeShare()">Cancel</button>
+      <button class="btn-red" style="width:auto;padding:9px 18px" id="shareConfirmBtn" onclick="confirmShare()">Send Share Link →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BOOK REVIEW OVERLAY ══ -->
+<div class="review-overlay" id="reviewOverlay" onclick="if(event.target===this)closeBookReview()">
+  <div class="review-modal">
+    <h3>Book a Review Session</h3>
+    <div class="rm-sub">Our analyst team will walk you through your findings, prioritise remediations and plan next steps.</div>
+    <div class="review-field"><label>Preferred Date</label><input type="date" id="rvDate"></div>
+    <div class="review-field">
+      <label>Preferred Time</label>
+      <select id="rvTime">
+        <option value="">Select a time…</option>
+        <option>9:00 AM ET</option><option>10:00 AM ET</option><option>11:00 AM ET</option>
+        <option>1:00 PM ET</option><option>2:00 PM ET</option><option>3:00 PM ET</option>
+        <option>4:00 PM ET</option><option>Flexible</option>
+      </select>
+    </div>
+    <div class="review-field"><label>Topic / Question</label><textarea id="rvTopic" placeholder="What would you like to focus on? (optional)"></textarea></div>
+    <div class="review-actions">
+      <button class="tb-btn" onclick="closeBookReview()">Cancel</button>
+      <button class="btn-red" style="width:auto;padding:10px 18px" onclick="submitBookReview()">Book Session →</button>
+    </div>
+    <div id="rvConfirm" style="display:none;font:600 11px var(--mono);color:#16a34a;text-align:center;margin-top:12px">✓ Your session request has been submitted. We will confirm by email.</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════════
+// CONFIGURATION — update before deploying
+// ══════════════════════════════════════════════════════════════════════
+const GAS_ENDPOINT  = 'https://script.google.com/macros/s/PASTE_YOUR_DEPLOYMENT_ID_HERE/exec';
+const INDEX_HTML    = 'index.html';   // path to the data tool (for PDF/PPTX generation)
+const ADMIN_DOMAIN  = 'sureshield.ai';
+const HUB_BASE_URL  = 'hub.html';
+
+// ══════════════════════════════════════════════════════════════════════
+// SESSION STATE (populated after token verification)
+// ══════════════════════════════════════════════════════════════════════
+var HUB = {
+  email:        '',
+  isAdmin:      false,
+  carrierDomain:'',
+  companyName:  '',
+  token:        '',
+  data:         null,   // populated by postMessage from INDEX_HTML iframe
+};
+
+// ══════════════════════════════════════════════════════════════════════
+// BOOT: verify token or admin params, then populate
+// ══════════════════════════════════════════════════════════════════════
+(function boot() {
+  var params = new URLSearchParams(window.location.search);
+  var token  = params.get('t');
+  var admin  = params.get('admin');
+  var domain = params.get('domain') || params.get('hub');
+  var email  = params.get('email');
+  var dev    = params.get('dev');   // ?dev=1&domain=X — local preview, skips GAS
+
+  if (admin === '1' && domain && email) {
+    // Admin direct access — no token verification, not logged
+    HUB.email         = decodeURIComponent(email);
+    HUB.isAdmin       = true;
+    HUB.carrierDomain = decodeURIComponent(domain);
+    history.replaceState({}, '', HUB_BASE_URL + '?hub=' + encodeURIComponent(HUB.carrierDomain));
+    setLoadStatus('Loading carrier data…');
+    initHub();
+
+  } else if (dev === '1' && domain) {
+    // Dev / preview mode — no GAS, no OTP, no server needed
+    HUB.email         = 'dev@sureshield.ai';
+    HUB.isAdmin       = true;
+    HUB.carrierDomain = decodeURIComponent(domain);
+    HUB._devMode      = true;
+    history.replaceState({}, '', HUB_BASE_URL + '?hub=' + encodeURIComponent(HUB.carrierDomain));
+    setLoadStatus('Loading carrier data (dev mode)…');
+    initHub();
+
+  } else if (token) {
+    HUB.token = token;
+    setLoadStatus('Verifying access…');
+    // If GAS endpoint not configured yet, bail gracefully
+    if (GAS_ENDPOINT.indexOf('PASTE_YOUR') !== -1) {
+      showError('GAS endpoint not configured. Open hub with <b>?dev=1&domain=YOUR_DOMAIN</b> to preview locally.');
+      return;
+    }
+    gasCall({ action: 'verify_token', token: token }, function(err, res) {
+      if (!res || !res.ok) {
+        showError('Access denied: ' + ((res && res.error) || 'Invalid or expired link.') + '<br><br>Request a new hub link via the <a href="index.html">SureShield website</a>.');
+        return;
+      }
+      HUB.email         = res.email        || '';
+      HUB.isAdmin       = false;
+      HUB.carrierDomain = res.carrier_domain || '';
+      history.replaceState({}, '', HUB_BASE_URL + '?hub=' + encodeURIComponent(HUB.carrierDomain));
+      setLoadStatus('Loading carrier data…');
+      initHub();
+    });
+
+  } else {
+    showError('This page must be opened via your secure hub link.<br><br><b>Testing locally?</b> Open as:<br><code style="font-size:10px">hub.html?dev=1&amp;domain=1pointcom.com</code>');
+  }
+})();
+
+function setLoadStatus(msg) {
+  var el = document.getElementById('loadStatus');
+  if (el) el.textContent = msg;
+}
+
+function showError(html) {
+  var screen = document.getElementById('hubLoading');
+  screen.classList.add('error');
+  var msg = document.getElementById('errMsg');
+  if (msg) msg.innerHTML = html;
+}
+
+function initHub() {
+  // Set user display
+  var initials = HUB.email.split('@')[0].slice(0,2).toUpperCase();
+  document.getElementById('userAvatar').textContent = initials;
+  document.getElementById('userNameEl').textContent = HUB.email;
+  document.getElementById('userRoleEl').textContent = HUB.isAdmin ? 'Admin · SureShield' : 'Hub Member';
+
+  // Request carrier data from index.html via hidden iframe
+  loadCarrierData(HUB.carrierDomain, function(data) {
+    HUB.data = data;
+    populateHub(data);
+    showApp();
+  });
+}
+
+// ── Load carrier data from index.html via postMessage ──────────────
+var DEV_STUB = {
+  company_name: '1stPoint Communications',
+  domain:       '1pointcom.com',
+  state:        'New Jersey',
+  comm_type:    'CLEC',
+  max_score:    73.4,
+  max_band:     'High',
+  nat_rank:     142,
+  state_rank:   8,
+  peer_rank:    19,
+  kev_count:    2,
+  max_pillars:  [82.1, 68.4, 71.0, 77.3, 65.9],
+  quick_wins: [
+    { cat:'cat-p2', catLabel:'P2 · Email Security',   title:'Enforce DMARC Policy',              detail:'DMARC found at p=none. Upgrade to p=quarantine or p=reject.',    effort:'Low Effort', impact:'High Impact', effortCls:'fb-low', impactCls:'fb-high' },
+    { cat:'cat-p5', catLabel:'P5 · Web / App',        title:'Enable HSTS Header',                detail:'Strict-Transport-Security header missing on primary web host.',   effort:'Low Effort', impact:'Med Impact',  effortCls:'fb-low', impactCls:'fb-med'  },
+    { cat:'cat-kev', catLabel:'CISA KEV · Active Exploit', title:'Patch Known Exploited CVE',   detail:'CISA KEV detected on an exposed host. Immediate patching required.',effort:'Med Effort', impact:'Critical',    effortCls:'fb-med', impactCls:'fb-crit' },
+    { cat:'cat-p3', catLabel:'P3 · Network',           title:'Close Unnecessary Open Ports',     detail:'Non-standard ports exposed. Close unused ports, harden firewall.', effort:'Low Effort', impact:'Med Impact',  effortCls:'fb-low', impactCls:'fb-med'  },
+    { cat:'cat-p1', catLabel:'P1 · Threat Exposure',   title:'Address High EPSS CVEs',           detail:'Multiple CVEs with EPSS > 0.5. Patch within 30 days.',            effort:'Med Effort', impact:'High Impact', effortCls:'fb-med', impactCls:'fb-high' },
+  ]
+};
+
+function loadCarrierData(domain, cb) {
+  // Dev mode: use stub immediately, no iframe needed
+  if (HUB._devMode) {
+    var stub = Object.assign({}, DEV_STUB, { domain: domain });
+    // Use the domain to derive a placeholder company name if not 1pointcom
+    if (domain !== '1pointcom.com') {
+      stub.company_name = domain.replace(/\.[^.]+$/, '').replace(/[^a-z0-9]/gi,' ')
+        .replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+    }
+    setTimeout(function() { cb(stub); }, 300);
+    return;
+  }
+
+  // Production: request data from index.html via hidden iframe + postMessage
+  var iframe = document.createElement('iframe');
+  iframe.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;border:none;';
+  iframe.src = INDEX_HTML + '#hub-data-request';
+  document.body.appendChild(iframe);
+
+  var timeout = setTimeout(function() {
+    if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+    cb({ domain: domain, score: null, band: null });
+  }, 12000);
+
+  window.addEventListener('message', function handler(e) {
+    if (!e.data || e.data.type !== 'ss-hub-data') return;
+    if ((e.data.domain || '').toLowerCase() !== domain.toLowerCase()) return;
+    clearTimeout(timeout);
+    window.removeEventListener('message', handler);
+    if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+    cb(e.data);
+  });
+
+  iframe.addEventListener('load', function() {
+    setTimeout(function() {
+      try { iframe.contentWindow.postMessage({ type: 'hub-request', domain: domain }, '*'); } catch(e) {}
+    }, 500);
+  });
+}
+
+// ── Populate all hub sections ─────────────────────────────────────
+var BAND_COLORS = { Critical:'#dc2626', High:'#ea580c', Medium:'#d97706', Low:'#16a34a' };
+
+function populateHub(d) {
+  var co     = d.company_name || d.domain || HUB.carrierDomain;
+  var domain = HUB.carrierDomain;
+  var score  = d.max_score  != null ? Math.round(d.max_score)  : null;
+  var band   = d.max_band   || null;
+  var pillars= d.max_pillars || [];
+  var kevCount = d.kev_count || 0;
+  var state  = d.state  || '';
+  var commType= d.comm_type || '';
+
+  HUB.companyName = co;
+
+  // Hero
+  document.getElementById('heroCompany').textContent = co;
+  document.getElementById('heroScore').textContent   = score != null ? score : '—';
+  document.getElementById('heroBand').textContent    = band  || '—';
+  if (band && BAND_COLORS[band]) {
+    document.getElementById('heroScore').style.color = BAND_COLORS[band];
+    document.getElementById('heroBand').style.color  = BAND_COLORS[band];
+  }
+  document.getElementById('heroNatRank').textContent  = d.nat_rank  ? '#' + d.nat_rank  : '—';
+  document.getElementById('heroStateRank').textContent= d.state_rank ? '#' + d.state_rank: '—';
+  document.getElementById('heroPeerRank').textContent = d.peer_rank  ? '#' + d.peer_rank : '—';
+
+  // Bubbles
+  var bubbles = [];
+  if (state)    bubbles.push(state);
+  if (commType) bubbles.push(commType);
+  if (d.founded) bubbles.push('Founded ' + d.founded);
+  if (d.rev_at_risk) bubbles.push({ text: 'Revenue at Risk · ' + d.rev_at_risk, accent: true });
+  var bEl = document.getElementById('heroBubbles');
+  bEl.innerHTML = bubbles.map(function(b) {
+    if (typeof b === 'object') return '<span class="bubble accent">' + b.text + '</span>';
+    return '<span class="bubble">' + b + '</span>';
+  }).join('');
+
+  // KEV alert
+  if (kevCount > 0) {
+    document.getElementById('kevAlert').style.display = '';
+    document.getElementById('kevT1').textContent = kevCount + ' CISA KEV' + (kevCount > 1 ? 's' : '') + ' — Active Exploit' + (kevCount > 1 ? 's' : '');
+  }
+
+  // Rail
+  document.getElementById('railCompany').textContent  = co;
+  document.getElementById('railDomain').textContent   = domain;
+  document.getElementById('railScore').textContent    = score != null ? score : '—';
+  document.getElementById('railBand').textContent     = band  || '—';
+  document.getElementById('railNatRank').textContent  = d.nat_rank  ? '#' + d.nat_rank  : '—';
+  document.getElementById('railStateRank').textContent= d.state_rank ? '#' + d.state_rank: '—';
+  if (band && BAND_COLORS[band]) {
+    document.getElementById('railScore').style.color = BAND_COLORS[band];
+    document.getElementById('railBand').style.color  = BAND_COLORS[band];
+  }
+
+  // Footer meta
+  document.getElementById('footerMeta').textContent = co + ' · ' + domain + ' · Confidential · 2026 Q1';
+
+  // Pillar grid
+  var pillarNames = ['P1 Threat','P2 Email','P3 Network','P4 Web / App','P5 Surface'];
+  var pillarGrid  = document.getElementById('pillarsGrid');
+  pillarGrid.innerHTML = pillarNames.map(function(name, i) {
+    var val = pillars[i] != null ? pillars[i].toFixed(1) : '—';
+    var pct = pillars[i] != null ? Math.min(100, pillars[i]) : 0;
+    var col = pct >= 75 ? '#dc2626' : pct >= 50 ? '#ea580c' : pct >= 25 ? '#d97706' : '#16a34a';
+    return '<div class="metric">'
+      + '<div class="lbl">' + name + ' <span class="maxtag">MAX</span></div>'
+      + '<div class="val" style="color:' + col + '">' + val + '</div>'
+      + '<div class="mtag">score</div>'
+      + '<div class="bar"><span style="width:' + pct + '%;background:' + col + '"></span></div>'
+      + '</div>';
+  }).join('');
+
+  // Report tiles
+  var tilesEl = document.getElementById('reportTiles');
+  tilesEl.innerHTML = [
+    '<div class="tile" onclick="openPdfReport()">',
+    '  <div class="tile-cap">',
+    '    <div class="th">📄 Full Carrier Risk Report · PDF</div>',
+    '    <div class="td">Complete carrier-specific findings: per-subdomain scores, CVE references, pillar breakdown and remediation roadmap.</div>',
+    '  </div>',
+    '</div>',
+    '<div class="tile" onclick="downloadPptxReport()">',
+    '  <div class="tile-cap">',
+    '    <div class="th">📊 Executive Summary · PPTX</div>',
+    '    <div class="td">Key findings formatted for board and leadership presentation — print-ready PowerPoint.</div>',
+    '  </div>',
+    '</div>',
+  ].join('');
+
+  // Remediation fixes (rendered from carrier data or defaults)
+  renderFixes(d);
+}
+
+function renderFixes(d) {
+  var body = document.getElementById('fixesBody');
+  var fixes = d.quick_wins || [];
+  if (!fixes.length) {
+    // Default illustrative fixes — will be replaced by real data when index.html sends them
+    fixes = [
+      { cat:'cat-p2', catLabel:'P2 · Email Security', title:'Enforce DMARC Policy', detail:'DMARC found at p=none. Upgrade to p=quarantine or p=reject.', effort:'Low Effort', impact:'High Impact', effortCls:'fb-low', impactCls:'fb-high' },
+      { cat:'cat-p5', catLabel:'P5 · Web/App Security', title:'Enable HTTP Strict Transport Security', detail:'HSTS header missing. Add Strict-Transport-Security header.', effort:'Low Effort', impact:'Med Impact', effortCls:'fb-low', impactCls:'fb-med' },
+      { cat:'cat-kev', catLabel:'CISA KEV · Active Exploit', title:'Patch Known Exploited Vulnerability', detail:'CISA KEV detected on an exposed host. Immediate patching required.', effort:'Med Effort', impact:'Critical', effortCls:'fb-med', impactCls:'fb-crit' },
+      { cat:'cat-p3', catLabel:'P3 · Network Security', title:'Close Unnecessary Open Ports', detail:'Non-standard ports exposed. Close unused ports and apply firewall rules.', effort:'Low Effort', impact:'Med Impact', effortCls:'fb-low', impactCls:'fb-med' },
+      { cat:'cat-p1', catLabel:'P1 · Threat Exposure', title:'Address Elevated EPSS CVEs', detail:'Multiple CVEs with high exploitation probability (EPSS > 0.5). Patch within 30 days.', effort:'Med Effort', impact:'High Impact', effortCls:'fb-med', impactCls:'fb-high' },
+    ];
+  }
+
+  var html = '<div class="fixes-section-label">⚡ Quick Wins — Immediate Action</div>'
+    + '<div class="fixes-grid">';
+  fixes.forEach(function(f, i) {
+    html += '<div class="fix-item">'
+      + '<div class="fix-item-num">0' + (i+1) + '</div>'
+      + '<div>'
+      + '<div class="fix-item-cat ' + (f.cat || '') + '">' + f.catLabel + '</div>'
+      + '<div class="fix-item-title">' + f.title + '</div>'
+      + '<div class="fix-item-detail">' + f.detail + '</div>'
+      + '</div>'
+      + '<div class="fix-badges">'
+      + '<span class="fix-badge ' + (f.effortCls || '') + '">' + f.effort + '</span>'
+      + '<span class="fix-badge ' + (f.impactCls  || '') + '">' + f.impact + '</span>'
+      + '</div>'
+      + '</div>';
+  });
+  html += '</div>';
+  body.innerHTML = html;
+}
+
+function showApp() {
+  document.getElementById('hubLoading').style.display = 'none';
+  document.getElementById('appRoot').style.display   = '';
+  document.getElementById('appRoot2').style.display  = '';
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// REPORT PDF / PPTX (via background iframe → postMessage)
+// ══════════════════════════════════════════════════════════════════════
+var _pdfBlobUrl = null;
+
+function _cleanBgFrame(id) {
+  var f = document.getElementById(id);
+  if (f && f.parentNode) f.parentNode.removeChild(f);
+}
+
+function _bgIframe(id, src) {
+  _cleanBgFrame(id);
+  var f = document.createElement('iframe');
+  f.id = id; f.allow = 'downloads';
+  f.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;border:none;';
+  f.src = src;
+  document.body.appendChild(f);
+  return f;
+}
+
+function openPdfReport() {
+  document.getElementById('pdfLoader').style.display = 'flex';
+  _bgIframe('bgFramePdf', INDEX_HTML + '?hubMode=1&domain=' + encodeURIComponent(HUB.carrierDomain) + '&view=report#hub');
+}
+
+function downloadPptxReport() {
+  showToast('Generating PowerPoint… download will start shortly.');
+  _bgIframe('bgFramePptx', INDEX_HTML + '?hubMode=1&domain=' + encodeURIComponent(HUB.carrierDomain) + '&view=pptx#hub');
+  setTimeout(function() { _cleanBgFrame('bgFramePptx'); }, 60000);
+}
+
+window.addEventListener('message', function(e) {
+  if (!e.data) return;
+  // PDF ready
+  if (e.data.type === 'ss-pdf-ready') {
+    _cleanBgFrame('bgFramePdf');
+    if (_pdfBlobUrl) { try { URL.revokeObjectURL(_pdfBlobUrl); } catch(x){} }
+    var blob = new Blob([e.data.buf], { type: 'application/pdf' });
+    _pdfBlobUrl = URL.createObjectURL(blob);
+    document.getElementById('pdfLoader').style.display = 'none';
+    document.getElementById('overlayTitle').textContent = 'Carrier Risk Report — ' + HUB.carrierDomain;
+    var frame = document.getElementById('reportFrame');
+    frame.removeAttribute('srcdoc');
+    frame.src = _pdfBlobUrl + '#toolbar=0&navpanes=0&statusbar=0&view=FitH';
+    document.getElementById('reportOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  // Hub data from INDEX_HTML
+  if (e.data.type === 'ss-hub-data' && !HUB.data) {
+    // If we receive carrier data before/after our load, update
+    HUB.data = e.data;
+    populateHub(e.data);
+  }
+});
+
+function openReport(url, title) {
+  document.getElementById('reportFrame').src = url;
+  document.getElementById('overlayTitle').textContent = title;
+  document.getElementById('reportOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeReport() {
+  document.getElementById('reportOverlay').classList.remove('open');
+  var frame = document.getElementById('reportFrame');
+  frame.removeAttribute('srcdoc');
+  frame.src = '';
+  document.body.style.overflow = '';
+  document.getElementById('pdfLoader').style.display = 'none';
+  _cleanBgFrame('bgFramePdf');
+  _cleanBgFrame('bgFramePptx');
+  if (_pdfBlobUrl) { try { URL.revokeObjectURL(_pdfBlobUrl); } catch(x){} _pdfBlobUrl = null; }
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// GAS CALLS
+// ══════════════════════════════════════════════════════════════════════
+function gasCall(params, cb) {
+  var url = GAS_ENDPOINT + '?' + new URLSearchParams(params).toString();
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.timeout = 15000;
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState !== 4) return;
+    try { cb(null, JSON.parse(xhr.responseText)); }
+    catch(e) { cb(e, null); }
+  };
+  xhr.ontimeout = function() { cb(new Error('timeout'), null); };
+  xhr.send();
+}
+
+// Tab 7 · Service Requests (silent)
+function submitServiceRequest(btn, requestType, rowId) {
+  btn.textContent = 'Submitted ✓';
+  btn.classList.add('submitted');
+  btn.onclick = null;
+  var row = document.getElementById(rowId);
+  if (row) { row.classList.add('done'); }
+  addRequestedItem(requestType);
+  showToast('Request submitted — added to Requested Reports.');
+
+  gasCall({
+    action:        'service_request',
+    carrier_domain: HUB.carrierDomain,
+    email:          HUB.email,
+    request_type:   requestType,
+    notes:          HUB.companyName,
+  }, function() {});
+}
+
+// Tab 8 · Verify Fixes (silent)
+function requestVerifyFixes() {
+  var btn  = document.getElementById('reqUpdateBtn');
+  var conf = document.getElementById('reqConfirm');
+  if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
+
+  gasCall({
+    action:         'verify_fixes',
+    carrier_domain:  HUB.carrierDomain,
+    email:           HUB.email,
+    notes:           HUB.companyName,
+  }, function() {
+    if (btn)  btn.style.display = 'none';
+    if (conf) conf.classList.add('show');
+    showToast('Verification request logged.');
+  });
+}
+
+// Tab 9 · Book a Review (form)
+function openBookReview()  { document.getElementById('reviewOverlay').classList.add('open'); }
+function closeBookReview() { document.getElementById('reviewOverlay').classList.remove('open'); }
+
+function submitBookReview() {
+  var date  = document.getElementById('rvDate').value;
+  var time  = document.getElementById('rvTime').value;
+  var topic = document.getElementById('rvTopic').value.trim();
+
+  gasCall({
+    action:          'book_review',
+    carrier_domain:  HUB.carrierDomain,
+    email:           HUB.email,
+    preferred_date:  date,
+    preferred_time:  time,
+    topic:           topic,
+    notes:           HUB.companyName,
+  }, function() {
+    document.getElementById('rvConfirm').style.display = 'block';
+    setTimeout(function() {
+      closeBookReview();
+      document.getElementById('rvConfirm').style.display = 'none';
+    }, 3000);
+    showToast('Review session booked — we will confirm by email.');
+  });
+}
+
+// Tab 10 · Share Hub
+function openShare()  { document.getElementById('shareOverlay').classList.add('open'); document.getElementById('shareAgree').checked = false; document.getElementById('shareFormSection').classList.remove('visible'); }
+function closeShare() { document.getElementById('shareOverlay').classList.remove('open'); }
+
+function confirmShare() {
+  var recipName  = document.getElementById('shareRecipName').value.trim();
+  var recipEmail = document.getElementById('shareRecipEmail').value.trim();
+  var recipRole  = document.getElementById('shareRecipRole').value.trim();
+
+  if (!recipEmail) { showToast('Please enter the recipient email.'); return; }
+
+  gasCall({
+    action:         'share_hub',
+    carrier_domain:  HUB.carrierDomain,
+    shared_by:       HUB.email,
+    recip_name:      recipName,
+    recip_email:     recipEmail,
+    recip_role:      recipRole,
+    company_name:    HUB.companyName,
+    hub_base_url:    window.location.origin + window.location.pathname.replace(/[^/]+$/, '') + HUB_BASE_URL,
+  }, function(err, res) {
+    closeShare();
+    if (res && res.ok) {
+      showToast('Hub access sent to ' + recipEmail + '.');
+    } else {
+      showToast('Share failed — please try again.');
+    }
+  });
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// LOG OVERLAY (populated from HUB session data — real log from GAS)
+// ══════════════════════════════════════════════════════════════════════
+function openLog() {
+  document.getElementById('logOverlay').classList.add('open');
+  document.getElementById('logSub').textContent = 'Access log for ' + (HUB.carrierDomain || 'this hub');
+  // TODO: fetch access log from GAS Tab 6 filtered by carrier_domain
+  document.getElementById('logRows').innerHTML = '<div style="font:400 12px var(--sans);color:var(--text3);padding:12px 0">Access log requires connectivity to the GAS backend.</div>';
+}
+function closeLog() { document.getElementById('logOverlay').classList.remove('open'); }
+
+// ══════════════════════════════════════════════════════════════════════
+// UI HELPERS
+// ══════════════════════════════════════════════════════════════════════
+function scrollToSec(id) {
+  var el = document.getElementById(id);
+  if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 16, behavior: 'smooth' });
+}
+function navTo(link, id) {
+  document.querySelectorAll('.rail-nav a').forEach(function(a) { a.classList.remove('active'); });
+  if (link) link.classList.add('active');
+  if (id) scrollToSec(id); else window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function toggleCollapse(id) {
+  var s = document.getElementById(id);
+  var b = document.getElementById('fixesCollapseBtn');
+  var c = s.classList.toggle('collapsed');
+  if (b) b.textContent = c ? 'Expand ▸' : 'Collapse ▾';
+}
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2800);
+}
+function toggleTheme() {
+  var l = document.body.classList.toggle('light');
+  try { localStorage.setItem('ss_hub_theme', l ? 'light' : 'dark'); } catch(e) {}
+  document.getElementById('themeBtn').textContent = l ? '☾' : '☀';
+}
+(function() {
+  try { if (localStorage.getItem('ss_hub_theme') === 'light') { document.body.classList.add('light'); document.getElementById('themeBtn').textContent = '☾'; } } catch(e) {}
+})();
+
+var _reqCount = 0;
+function addRequestedItem(title) {
+  _reqCount++;
+  var empty = document.getElementById('reqEmpty');
+  if (empty) empty.style.display = 'none';
+  var list  = document.getElementById('reqList');
+  var now   = new Date();
+  var hhmm  = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
+  var row   = document.createElement('div');
+  row.className = 'reqrow';
+  row.innerHTML = '<span class="rq-t"></span><span class="rq-when">Requested · Today ' + hhmm + '</span><span class="rq-status">Pending</span>';
+  row.querySelector('.rq-t').textContent = title;
+  list.appendChild(row);
+  var c = document.getElementById('reqCount');
+  if (c) c.textContent = _reqCount + ' request' + (_reqCount > 1 ? 's' : '') + ' logged';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeReport(); closeLog(); closeShare(); closeBookReview(); }
+});
+</script>
+</body>
+</html>
